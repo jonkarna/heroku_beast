@@ -1,0 +1,7 @@
+rails --version 2.3.3
+highline
+ruby-debug
+RedCloth
+bluecloth
+ruby-openid
+mislav-will_paginate --source http://gems.github.com
