@@ -1,32 +1,17 @@
-== Altered Beast
+== Heroku Beast
+Fork of Altered Beast[http://github.com/courtenay/altered_beast]
 
-The popular rails-based Beast forum, rewritten from the ground up with the same database and views.
+*Enable Heroku Sendgrid Addon*
+You’ll need to activate the sendgrid heroku addon for your app. If you do not, you will run into an EAFNOSUPPORT error.
 
-* full i18n (with German and English support)
-* updated for Rails 2.3.3
-* using rspec/model_stubbing
-* added a state machine for user logins
-* built-in multi-site support
-* spam protection from akismet/viking
-* forum authorization rules (public/private/invitation)
-* email and atom feed support
-* xml/json API (not 100% tested yet, fixing soon)
-* highline based easy console installer
-* internationalization via the I18n framework
+    heroku addons:add sendgrid
 
-Check out the code via git:
+*Setting up the db*
+Again, if Sendgrid isn’t turned on, this will silently error when it tries to save the initial user.
 
-    git clone git://github.com/courtenay/altered_beast.git
+    heroku rake heroku:bootstrap['your_site_name','yourapp.heroku.com']
 
+*Login*
+username/password: heroku
 
-=== INSTALLATION
-
-    # download altered_beast
-    # gem install rails 2.3.3
-    $ mkdir log
-    $ rake tmp:create
-    $ rake app:bootstrap
-
-    Follow the instructions to create your database and load users.
-    Start the application with script/server and visit http://localhost:3000 to 
-    visit your new forum.
+Enjoy.
