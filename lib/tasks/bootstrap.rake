@@ -10,7 +10,6 @@ namespace :heroku do
       debugger
     end
     puts "Site created successfully"
-    puts site.inspect
     user = site.all_users.build :login => 'heroku', :email => 'admin@example.com'
     user.admin = true
     user.password = user.password_confirmation = 'heroku'
@@ -23,6 +22,5 @@ namespace :heroku do
     end
     user.activate!
     puts "User created successfully"
-    puts user.inspect
   end
 end
