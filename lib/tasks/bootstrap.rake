@@ -5,7 +5,7 @@ namespace :heroku do
     puts '1'
     if site.save!
       puts '2'
-      user = site.all_users.build :login => 'heroku', :email => ‘admin@example.com’, :admin => true
+      user = site.all_users.build :login => 'heroku', :email => 'admin@example.com', :admin => true
       puts '3'
       user.password = user.password_confirmation = 'heroku'
       puts '4'
