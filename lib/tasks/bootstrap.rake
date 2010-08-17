@@ -4,7 +4,6 @@ namespace :heroku do
     site = Site.new :name => args.site_name, :host => args.site_url
     begin
       site.save!
-      puts "Site created successfully"
     rescue ActiveRecord::RecordInvalid
       puts "The site didn't validate for whatever reason. Fix and call site.save!"
       puts site.errors.full_messages.to_sentence
@@ -16,7 +15,6 @@ namespace :heroku do
     begin
       user.save!
       user.activate!
-      puts "User created successfully"
     rescue ActiveRecord::RecordInvalid
       puts "The user didn't validate for whatever reason. Fix and call user.save!"
       puts user.errors.full_messages.to_sentence
