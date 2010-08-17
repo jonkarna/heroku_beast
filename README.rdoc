@@ -2,16 +2,19 @@
 Fork of Altered Beast[http://github.com/courtenay/altered_beast]
 
 *Enable Heroku Sendgrid Addon*
-You’ll need to activate the sendgrid heroku addon for your app. If you do not, you will run into an EAFNOSUPPORT error.
+
+You'll need to activate the sendgrid heroku addon for your app. If you do not, you will run into an EAFNOSUPPORT error.
 
     heroku addons:add sendgrid
 
 *Setting up the db*
-Again, if Sendgrid isn’t turned on, this will silently error when it tries to save the initial user.
+
+Again, if Sendgrid isn't turned on, this will silently error when it tries to save the initial user.
 
     heroku rake heroku:bootstrap['your_site_name','yourapp.heroku.com']
 
 *Login*
+
 username/password: heroku
 
 Enjoy.
