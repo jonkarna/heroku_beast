@@ -1,5 +1,5 @@
 namespace :heroku do
-  task :bootstrap, [:site_name, :site_url] => [:create_site,:create_user] do |t, args|
+  task :bootstrap, [:site_name, :site_url] => ["db:schema:load", "db:migrate"] do |t, args|
     args.with_defaults(:site_name => "localhost", :site_url => "localhost")
     site = Site.new :name => args.site_name, :host => args.site_url
     site.save!
