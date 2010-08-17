@@ -12,11 +12,25 @@ namespace :heroku do
       begin
         user.save!
       rescue ActiveRecord::RecordInvalid
-        puts "The user didn't validate for whatever reason. Fix and call user.save!"
         puts user.errors.full_messages.to_sentence
         debugger
       end
       puts '5'
+      user.activate!
+    end
+  end
+  task :create_user, [:site_url] => [:environment] do |t, args|
+    args.with_defaults(:site_url => "localhost")
+    site = Site.find_by_host args.site_url
+    unless site.nil?
+      user = site.all_users.build :login => 'heroku', :email => 'admin@example.com', :admin => true
+      user.password = user.password_confirmation = 'heroku'
+      begin
+        user.save!
+      rescue
+        puts user.errors.full_messages.to_sentence
+        debugger
+      end
       user.activate!
     end
   end
