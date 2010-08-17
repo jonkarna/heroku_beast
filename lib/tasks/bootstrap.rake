@@ -1,33 +1,30 @@
-namespace :app do
-  task :app_specific => [:create_site] do
-  end
-
-  task :create_site => [:setup, :environment] do
-    site = Site.new :name => 'localhost', :host => 'localhost'
+namespace :heroku do
+  task :bootstrap, [:site_name, :site_url] => ["db:reset", "db:schema:load", "db:migrate"] do |t, args|
+    args.with_defaults(:site_name => "localhost", :site_url => "localhost")
+    site = Site.new :name => args.site_name, :host => args.site_url
     begin
       site.save!
     rescue ActiveRecord::RecordInvalid
-      say "The site didn't validate for whatever reason. Fix and call site.save!"
-      say site.errors.full_messages.to_sentence
+      puts "The site didn't validate for whatever reason. Fix and call site.save!"
+      puts site.errors.full_messages.to_sentence
       debugger
     end
-    say "Site created successfully"
-    say site.inspect
+    puts "Site created successfully"
+    puts site.inspect
     puts
-    user = site.all_users.build :login => 'admin', :email => 'admin@example.com'
+    user = site.all_users.build :login => 'heroku', :email => 'admin@example.com'
     user.admin = true
-    user.password = user.password_confirmation = 'admin'
+    user.password = user.password_confirmation = 'heroku'
     begin
       user.save!
     rescue ActiveRecord::RecordInvalid
-      say "The user didn't validate for whatever reason. Fix and call user.save!"
-      say user.errors.full_messages.to_sentence
+      puts "The user didn't validate for whatever reason. Fix and call user.save!"
+      puts user.errors.full_messages.to_sentence
       debugger
     end
     user.activate!
-    say "User created successfully"
-    say user.inspect
+    puts "User created successfully"
+    puts user.inspect
     puts
   end
-  
 end
