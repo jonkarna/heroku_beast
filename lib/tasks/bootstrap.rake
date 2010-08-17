@@ -9,7 +9,13 @@ namespace :heroku do
       puts '3'
       user.password = user.password_confirmation = 'heroku'
       puts '4'
-      user.save!
+      begin
+        user.save!
+      rescue ActiveRecord::RecordInvalid
+        puts "The user didn't validate for whatever reason. Fix and call user.save!"
+        puts user.errors.full_messages.to_sentence
+        debugger
+      end
       puts '5'
       user.activate!
     end
