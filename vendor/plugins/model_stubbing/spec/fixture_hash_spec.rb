@@ -9,13 +9,13 @@ module ModelStubbing
       @user.stub!(:connection).and_return(FakeConnection.new)
       @fixture    = FixtureHash.new(@user).update :foo => 1, :bar => :baz
     end
-    
+
     it "creates key list" do
       keys = @fixture.key_list
       keys.index("`foo`").should_not be_nil
       keys.index("`bar`").should_not be_nil
     end
-    
+
     it "creates value list" do
       values = @fixture.value_list
       values.index(%("1")).should_not be_nil

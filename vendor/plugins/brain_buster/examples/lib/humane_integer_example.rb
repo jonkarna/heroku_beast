@@ -8,16 +8,16 @@ describe HumaneInteger do
       one.to_english
     }.should_not raise_error
   end
-  
+
   it "should have english words for ints" do
     to_english(1).should == "one"
     to_english(42).should == "forty-two"
     to_english(102).should == "one hundred two"
     to_english(40562).should == "forty thousand five hundred sixty-two"
   end
-  
+
   private
-  
+
   def to_english(int)
     HumaneInteger.new(int).to_english
   end

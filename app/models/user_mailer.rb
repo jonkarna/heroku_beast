@@ -4,13 +4,13 @@ class UserMailer < ActionMailer::Base
     @subject    += 'Please activate your new account'
     @body[:url]  = activate_url(user.activation_code, :host => user.site.host)
   end
-  
+
   def activation(user)
     setup_email(user)
     @subject    += 'Your account has been activated!'
     @body[:url]  = root_url(:host => user.site.host)
   end
-  
+
   protected
     def setup_email(user)
       @recipients  = "#{user.email}"

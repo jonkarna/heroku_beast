@@ -2,7 +2,7 @@ namespace :app do
   task :bootstrap => :setup do
     Debugger.start
     say "Bootstrapping #{@app_name}..."
-    
+
     puts
     say "1) Create database.yml config file."
     say "2) Load Database Schema."

@@ -19,7 +19,7 @@ Exemplar (http://www.bofh.org.uk/articles/2007/08/05/doing-the-fixture-thing)
 I actually saw Exemplar after I wrote the initial version, but they do seem similar.
 
 I honestly don't know if this is a better way or anything, I'm just experimenting with
-a different approach.  Oh, and apparently this is an implementation of the ObjectMother 
+a different approach.  Oh, and apparently this is an implementation of the ObjectMother
 (http://www.martinfowler.com/bliki/ObjectMother.html) pattern?
 
   # test/unit example
@@ -29,35 +29,35 @@ a different approach.  Oh, and apparently this is an implementation of the Objec
   class FooTest < Test::Unit::TestCase
     define_models do
       time 2007, 6, 1
-    
+
       model Role do
         stub :owner, :name => 'owner'
         stub :author, :name => 'author'
       end
-    
+
       model User do
         stub :name => 'bob', :admin => false
         stub :admin, :admin => true # inherits from default fixture
         stub :author, :roles => [all_stubs(:author_role)]
         stub :owner, :roles => [all_stubs(:author_role), all_stubs(:owner_role)]
       end
-    
+
       model Post do
         # uses admin user fixture above
-        stub :title => 'initial', :user => all_stubs(:admin_user), 
+        stub :title => 'initial', :user => all_stubs(:admin_user),
           :published_at => current_time + 5.days
       end
     end
-    
+
     def test_foo
       @user   = users(:default) # default user stub
       @admin  = users(:admin)
-      @custom = users(:default, :age => 25) # custom attributes, 
+      @custom = users(:default, :age => 25) # custom attributes,
                                             #but not equal to @user any more
-                                            
+
       @post   = posts(:default)
       @post.user # equal to @admin above
-      
+
       current_time # stubbed to be 6/1/2007 using mocha or rspec
     end
   end

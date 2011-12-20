@@ -2,11 +2,11 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe Post do
   define_models
-  
+
   it "finds topic" do
     posts(:default).topic.should == topics(:default)
   end
-  
+
   it "requires body" do
     p = new_post(:default)
     p.body = nil
@@ -28,7 +28,7 @@ describe Post, "being deleted" do
       stub :second, :body => 'second', :created_at => current_time - 6.days
     end
   end
-  
+
   before do
     @deleting_post = lambda { posts(:default).destroy }
   end
@@ -36,11 +36,11 @@ describe Post, "being deleted" do
   it "decrements cached forum posts_count" do
     @deleting_post.should change { forums(:default).reload.posts_count }.by(-1)
   end
-  
+
   it "decrements cached site posts_count" do
     @deleting_post.should change { sites(:default).reload.posts_count }.by(-1)
   end
-  
+
   it "decrements cached user posts_count" do
     @deleting_post.should change { users(:default).reload.posts_count }.by(-1)
   end
@@ -50,12 +50,12 @@ describe Post, "being deleted" do
     posts(:default).destroy
     topics(:default).reload.last_user.should == users(:default)
   end
-  
+
   it "fixes last_updated_at" do
     posts(:default).destroy
     topics(:default).reload.last_updated_at.should == posts(:second).created_at
   end
-  
+
   it "fixes #last_post" do
     topics(:default).recent_post.should == posts(:default)
     posts(:default).destroy
@@ -65,7 +65,7 @@ end
 
 describe Post, "being deleted as sole post in topic" do
   define_models
-  
+
   it "clears topic" do
     posts(:default).destroy
     lambda { topics(:default).reload }.should raise_error(ActiveRecord::RecordNotFound)
@@ -89,18 +89,18 @@ describe Post, "#editable_by?" do
     @user.should_receive(:moderator_of?).and_return(false)
     @post.should be_editable_by(@user)
   end
-  
+
   it "allows admin" do
     @user.should_receive(:moderator_of?).and_return(true)
     @post.should be_editable_by(@user)
   end
-  
+
   it "restricts moderator for other forum" do
     @post.should_receive(:forum).and_return @forum
     @user.should_receive(:moderator_of?).with(@forum).and_return(false)
     @post.should_not be_editable_by(@user)
   end
-  
+
   it "allows moderator" do
     @post.should_receive(:forum).and_return @forum
     @user.should_receive(:moderator_of?).with(@forum).and_return(true)

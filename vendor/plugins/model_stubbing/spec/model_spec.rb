@@ -5,7 +5,7 @@ module ModelStubbing
     before :all do
       @model = ModelStubbing.definitions[:default].models[:model_stubbing_users]
     end
-  
+
     it "is defined in stub file" do
       @model.should be_kind_of(Model)
     end
@@ -21,19 +21,19 @@ module ModelStubbing
       pending "Can't use default options without ActiveSupport" unless Object.const_defined?(:ActiveSupport)
       @default = Model.new(nil, Post)
     end
-  
+
     it "sets Model#name" do
       @default.name.should == :model_stubbing_posts
     end
-  
+
     it "sets class" do
       @default.model_class.should == Post
     end
-  
+
     it "sets plural value" do
       @default.plural.should == :model_stubbing_posts
     end
-  
+
     it "sets singular value" do
       @default.singular.should == 'model_stubbing_post'
     end
@@ -43,19 +43,19 @@ module ModelStubbing
     before :all do
       @custom  = Model.new(nil, Post, :name => :customs, :plural => :many_customs, :singular => :one_custom)
     end
-  
+
     it "sets Model#name" do
       @custom.name.should == :customs
     end
-  
+
     it "sets class" do
       @custom.model_class.should == Post
     end
-  
+
     it "sets plural value" do
       @custom.plural.should == :many_customs
     end
-  
+
     it "sets singular value" do
       @custom.singular.should == :one_custom
     end
@@ -66,17 +66,17 @@ module ModelStubbing
       @model = ModelStubbing.definitions[:default].models[:model_stubbing_users]
       @copy  = @model.dup
     end
-  
+
     it "references same definition" do
       @model.definition.should == @copy.definition
     end
-  
+
     %w(model_class name plural singular).each do |attr|
       it "keeps @#{attr} intact" do
         @model.send(attr).should == @copy.send(attr)
       end
     end
-  
+
     it "has the same number of stubs" do
       @model.stubs.size.should == @copy.stubs.size
     end
@@ -99,11 +99,11 @@ module ModelStubbing
         @model.stubs[key].should_not be_equal(@copy.stubs[key])
       end
     end
-  
+
     it "is not the same instance" do
       @model.object_id.should_not == @copy.object_id
     end
-  
+
     it "is still be equal" do
       @model.should == @copy
     end

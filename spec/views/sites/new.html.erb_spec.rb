@@ -4,7 +4,7 @@ describe "/sites/new.html.erb" do
   define_models :sites_controller
 
   include SitesHelper
-  
+
   before do
     @site = sites(:new)
     assigns[:site] = @site
@@ -12,7 +12,7 @@ describe "/sites/new.html.erb" do
 
   it "should render new form" do
     render "/sites/new.html.erb"
-    
+
     response.should have_tag("form[action=?][method=post]", sites_path) do
     end
   end

@@ -13,7 +13,7 @@ def setup_db
     create_table :mixins do |t|
       t.column :pos, :integer
       t.column :parent_id, :integer
-      t.column :created_at, :datetime      
+      t.column :created_at, :datetime
       t.column :updated_at, :datetime
     end
   end

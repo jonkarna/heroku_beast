@@ -5,11 +5,11 @@ describe Moderatorship do
     model Moderatorship do
       stub :user => all_stubs(:user), :forum => all_stubs(:forum)
     end
-    
+
     model Site do
       stub :other, :name => 'other'
     end
-    
+
     model Forum do
       stub :other_site, :name => "Other", :site => all_stubs(:other_site)
     end
@@ -22,7 +22,7 @@ describe Moderatorship do
     end.should change { Moderatorship.count }.by(1)
     forums(:other).moderators(true).should == [users(:default)]
   end
-  
+
   %w(user forum).each do |attr|
     it "requires #{attr}" do
       mod = new_moderatorship(:default)
@@ -31,19 +31,19 @@ describe Moderatorship do
       mod.errors.on("#{attr}_id".to_sym).should_not be_nil
     end
   end
-  
+
   it "doesn't add duplicate relation" do
     lambda do
       forums(:default).moderators << users(:default)
     end.should raise_error(ActiveRecord::RecordInvalid)
   end
-  
+
   it "doesn't add relation for user and forum in different sites" do
     lambda do
       forums(:other_site).moderators << users(:default)
     end.should raise_error(ActiveRecord::RecordInvalid)
   end
-  
+
   %w(forum user).each do |model|
     it "is cleaned up after a #{model} is deleted" do
       send(model.pluralize, :default).destroy

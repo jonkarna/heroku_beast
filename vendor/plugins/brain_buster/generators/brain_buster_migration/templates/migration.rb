@@ -1,12 +1,12 @@
 class <%= class_name %> < ActiveRecord::Migration
   class BrainBuster < ActiveRecord::Base; end;
-  
+
   def self.up
     create_table "<%= migration_table_name %>", :force => true do |t|
       t.column :question, :string
       t.column :answer, :string
     end
-    
+
     create "What is two plus two?", "4"
     create "What is the number before twelve?", "11"
     create "Five times two is what?", "10"
@@ -31,10 +31,10 @@ class <%= class_name %> < ActiveRecord::Migration
   def self.down
     drop_table "<%= migration_table_name %>"
   end
-  
+
   # create a logic captcha - answers should be lower case
   def self.create(question, answer)
     BrainBuster.create(:question => question, :answer => answer.downcase)
   end
-  
+
 end

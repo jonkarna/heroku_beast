@@ -2,7 +2,7 @@ require File.dirname(__FILE__) + '/../spec_helper'
 
 describe User, "(monitorships)" do
   define_models :monitorships
-  
+
   it "selects topics" do
     users(:default).monitored_topics.should == [topics(:default)]
   end
@@ -10,7 +10,7 @@ end
 
 describe Topic, "(Monitorships)" do
   define_models :monitorships
-  
+
   it "selects users" do
     topics(:default).monitoring_users.should == [users(:default)]
     topics(:other).monitoring_users.should == []
@@ -44,13 +44,13 @@ describe Monitorship do
       mod.errors.on(attr).should_not be_nil
     end
   end
-  
+
   it "doesn't add duplicate relation" do
     lambda do
       topics(:default).monitoring_users << users(:default)
     end.should raise_error(ActiveRecord::RecordInvalid)
   end
-  
+
   %w(topic user).each do |model|
     it "is cleaned up after a #{model} is deleted" do
       send(model.pluralize, :default).destroy

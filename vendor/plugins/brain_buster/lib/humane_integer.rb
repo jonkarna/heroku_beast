@@ -38,5 +38,5 @@ class HumaneInteger < DelegateClass(Integer)
     end
     strings
   end
-  
+
 end

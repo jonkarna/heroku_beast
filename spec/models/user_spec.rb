@@ -5,14 +5,14 @@ describe User do
 
   describe User, "being created" do
     define_models :users
-  
+
     before do
       @creating_user = lambda do
         user = create_user
         violated "#{user.errors.full_messages.to_sentence}" if user.new_record?
       end
     end
-  
+
     it 'logs in with openid' do
       u = sites(:default).users.new(:openid_url => 'http://foo', :email => 'zoe@girl.com')
       u.login = 'zoegirl'
@@ -22,7 +22,7 @@ describe User do
     it 'increments User.count' do
       @creating_user.should change(User, :count).by(1)
     end
-  
+
     it 'increments Site#users_count' do
       @creating_user.should change { sites(:default).reload.users_count }.by(1)
     end
@@ -36,19 +36,19 @@ describe User do
       end.should_not change(User, :count)
     end
   end
-  
+
   it "formats User#bio" do
     u = User.new :bio => 'foo'
     u.bio_html.should be_nil
     u.send :format_attributes
     u.bio_html.should == '<p>foo</p>'
   end
-  
+
   it "sets User#display_name from login if nil" do
     user = User.new :login => 'foo'
     user.display_name.should == user.login
   end
-  
+
   it "#seen! sets #last_seen_at" do
     user = users(:default)
     user.last_seen_at.should be_nil
@@ -168,13 +168,13 @@ describe User, "with no created users" do
     user.save!
     user
   end
-  
+
   it 'creates initial user as an admin' do
     site = Site.create! :name => "xfoo", :host => "xsite1.com"
     user = make_user(site, 'quire', 'quire@example.com')
     user.should be_admin
   end
-  
+
   it 'creates initial user as admin for each site' do
     site = Site.create! :name => "foo", :host => "site1.com"
 

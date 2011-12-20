@@ -24,7 +24,7 @@ require File.join(File.dirname(__FILE__), *%w[.. init])
 
 LOG_FILE_NAME = File.expand_path(File.join(File.dirname(__FILE__), "tmp", "test.log"))
 DATABASE = File.expand_path(File.join(File.dirname(__FILE__), "tmp", "brain_buster.sqlite3"))
- 
+
 def logger
   @logger ||= Logger.new(LOG_FILE_NAME)
 end
@@ -34,7 +34,7 @@ Column = ActiveRecord::ConnectionAdapters::Column
 # allow getting a BrainBuster model without hitting the database
 def stub_brain_buster(attributes = {})
   BrainBuster.stubs(:columns).returns(
-            [Column.new("question", nil, "string", false), 
+            [Column.new("question", nil, "string", false),
              Column.new("answer", nil, "string", false)])
   @brain_buster_stub = BrainBuster.new(attributes)
 end
