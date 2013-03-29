@@ -38,7 +38,7 @@
       <%= I18n.t 'txt.forum', :default => 'Forum' %>: <%= link_to h(post.forum.name), forum_path(post.forum) %> &ndash;
       <%= I18n.t 'txt.topic', :default => 'Topic' %>: <%= link_to h(post.topic.title), forum_topic_path(post.forum, post.topic) %>
     </p>
-    
+
     <%= post.body_html %>
   </td>
 </tr>

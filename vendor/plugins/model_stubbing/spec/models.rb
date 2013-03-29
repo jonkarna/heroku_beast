@@ -15,25 +15,25 @@ module ModelStubbing
       assert true
     end
   end
-  
+
   class FakeConnection
     def quote_column_name(name)
       "`#{name}`"
     end
-    
+
     def quote(value, whatever)
       value.to_s.inspect
     end
   end
-  
+
   class BlankModel
     attr_accessor :id, :valid
     attr_reader :attributes
-  
+
     def self.base_class
       self
     end
-  
+
     def new_record?() @new_record end
 
     def valid?
@@ -46,19 +46,19 @@ module ModelStubbing
         set_attribute key, value
       end
     end
-    
+
     def []=(key, value)
       set_attribute key, value
     end
-    
+
     def ==(other_model)
       self.class == other_model.class && id == other_model.id
     end
-    
+
     def inspect
       "#{self.class.name} ##{id} => #{@attributes.inspect}"
     end
-    
+
     def save
       @new_record = false
       self.id = db_id if self.id.nil?
@@ -68,7 +68,7 @@ module ModelStubbing
       raise "Invalid!" unless valid?
       save
     end
-    
+
     def method_missing(name, *args)
       if name.to_s =~ /(\w+)=$/
         set_attribute($1, args[0])
@@ -92,19 +92,19 @@ module ModelStubbing
     def meta_class
       @meta_class ||= class << self; self end
     end
-  
+
     def set_attribute(key, value)
       meta_class.send :attr_accessor, key
       send "#{key}=", value
       attributes[key] = value
     end
-    
+
     @@db_id = 0
     def db_id
       @@db_id += 1
     end
   end
-  
+
   User = Class.new BlankModel
   Post = Class.new BlankModel
   Tag  = Class.new BlankModel
@@ -118,11 +118,11 @@ module ModelStubbing
 
   define_models do
     time 2007, 6, 1
-    
+
     model User do
       stub :name => 'bob', :admin => false
     end
-    
+
     model Foo::Bar do
       stub :blah => 'foo'
     end
@@ -133,18 +133,18 @@ module ModelStubbing
       stub :foo, :name => "foo"
       stub :bar, :name => "bar"
     end
-    
+
     model User do
       stub :admin, :admin => true # inherits from default fixture
     end
-    
+
     model Post do
       # uses admin user fixture above
       stub :title => 'initial', :user => all_stubs(:admin_model_stubbing_user), :published_at => current_time + 5.days
       stub :nice_one, :title => 'nice one', :tags => [all_stubs(:foo_model_stubbing_tag), all_stubs(:bar_model_stubbing_tag)]
     end
   end
-  
+
   definitions[:default].setup_on FakeTester
 end
 

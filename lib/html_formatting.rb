@@ -1,7 +1,7 @@
 require 'redcloth'
 module HtmlFormatting
   protected
-  
+
   def format_attributes
     self.class.formatted_attributes.each do |attr|
       raw    = read_attribute attr

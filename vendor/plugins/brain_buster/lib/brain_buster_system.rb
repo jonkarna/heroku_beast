@@ -18,7 +18,7 @@ module BrainBusterSystem
       cattr_accessor :brain_buster_salt, :brain_buster_failure_message, :brain_buster_enabled
     end
   end
-  
+
   # Puts the BrainBuster model onto the controller
   def create_brain_buster
     raise_if_salt_isnt_set
@@ -26,23 +26,23 @@ module BrainBusterSystem
     debug_brain_buster { "Initializing the brain_buster object."}
     @captcha = find_brain_buster
   end
-  
+
   # Ensure that the answer attempt from the params successfully passes the captcha.
   # If it fails, captcha_failure is called, which by default will place an failure message in the
   # flash and return false (therefore halting the filter chain).
   # If the captcha passes, this just returns true so the filter chain will continue.
   def validate_brain_buster
-    raise_if_salt_isnt_set 
+    raise_if_salt_isnt_set
     return true if (captcha_passed? || !brain_buster_enabled)
     return captcha_failure unless (params[:captcha_id] && params[:captcha_answer])
-      
+
     captcha = @captcha = find_brain_buster
     is_success = captcha.attempt?(params[:captcha_answer])
     debug_brain_buster { is_success ? "Captcha successfully passed." : "Captcha failed - #{ captcha.inspect }" }
     set_captcha_status(is_success)
     return is_success ? captcha_success : captcha_failure
   end
-  
+
   # Encrypting status strings and the like, as plain text in the cookies is bad for business
   def self.encrypt(str, salt)
     Digest::SHA256.hexdigest("--#{str}--#{salt}--")
@@ -53,24 +53,24 @@ module BrainBusterSystem
     cookies[:captcha_status] == encrypt("passed")
   end
   alias :captcha_previously_passed? :captcha_passed?
-  
+
   # Determine if the last (and only the last) captcha attempt failed
   def last_captcha_attempt_failed?
     flash[:failed_captcha]
   end
-  
+
   protected
-  
+
   # Callback for when the captcha is passed successfully.
   # Override if you want to store the flag signaling a "safe" user somewhere else, of if you don't want to
   # store it at all (and therefore will challenge users each and every time.)
   def captcha_success
     true
   end
-  
+
   # Callback for when the captcha failed.
   # By default this will set the failure message in the flash, and also render :text with
-  # only the failure message!  This is probably not what you want.  Because of the nature of 
+  # only the failure message!  This is probably not what you want.  Because of the nature of
   # this plugin, BrainBuster cannot guess where to render or redirect to when a captcha
   # attempt fails.  You should override #render_or_redirect_for_captcha_failure to
   # handle captcha failure yourself.
@@ -78,15 +78,15 @@ module BrainBusterSystem
     set_captcha_failure_message
     render_or_redirect_for_captcha_failure
   end
-  
+
   def render_or_redirect_for_captcha_failure
     render :text => brain_buster_failure_message, :layout => true
   end
-  
+
   def set_captcha_failure_message
     flash[:error] = brain_buster_failure_message
   end
-  
+
   # Save the status of the current captcha, to see if we can bypass the captcha on future requests (if this was successful)
   # or if we need to re-render the same captcha on the next request (for failures).
   def set_captcha_status(is_success)
@@ -99,21 +99,21 @@ module BrainBusterSystem
   def raise_if_salt_isnt_set
     raise "You have to set the Brain Buster salt to something other then the default." if ActionController::Base.brain_buster_salt.blank?
   end
-  
+
   # Find a captcha either from an id in the params or the flash, or just find a random captcha
   def find_brain_buster
     BrainBuster.find_random_or_previous(params[:captcha_id] || flash[:failed_captcha])
   end
-  
+
   private
 
   # Log helper
   def debug_brain_buster(&msg)
     logger && logger.debug { msg.call }
   end
-  
+
   def encrypt(str)
     BrainBusterSystem.encrypt(str, brain_buster_salt)
   end
-  
+
 end

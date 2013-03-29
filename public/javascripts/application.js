@@ -9,7 +9,7 @@ var LoginForm = {
     $('openid_fields').hide();
     $('password_fields').show();
   },
-  
+
   setToOpenID: function() {
     $('password_fields').hide();
     $('openid_fields').show();
@@ -38,10 +38,10 @@ var PostForm = {
 			return $super();
 		}
 	}),
-	
+
 	cancel: Behavior.create({
-		onclick: function() { 
-			PostForm.clearPostId(); 
+		onclick: function() {
+			PostForm.clearPostId();
 			$('edit').hide()
 			$('reply').hide()
 			return false;
@@ -82,8 +82,8 @@ var PostForm = {
 
 var RowManager = {
   addMouseBehavior : function(ele){
-    ele.onmouseover = function(e){ 
-      ele.addClassName('topic_over'); 
+    ele.onmouseover = function(e){
+      ele.addClassName('topic_over');
     }
 
     ele.onmouseout = function(e){
@@ -100,11 +100,11 @@ Event.addBehavior({
 		$('search_box').focus();
 		return false
 	},
-          
+
   'tr.forum' : function() {
     RowManager.addMouseBehavior(this);
   },
-          
+
   'tr.topic' : function(){
     RowManager.addMouseBehavior(this);
   },
@@ -115,11 +115,11 @@ Event.addBehavior({
     if(anchor) { PostForm.edit.attach(anchor, postId) };
     RowManager.addMouseBehavior(this);
 	},
-	
+
 	'#reply-link': function() {
 		PostForm.reply.attach(this)
 	},
-	
+
 	'#reply-cancel': function() {
 		PostForm.cancel.attach(this)
 	}

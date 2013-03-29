@@ -22,12 +22,12 @@ class UsersController < ApplicationController
 
   def create
     cookies.delete :auth_token
-    @user = current_site.users.build(params[:user])    
+    @user = current_site.users.build(params[:user])
     @user.save if @user.valid?
     @user.register! if @user.valid?
     unless @user.new_record?
       redirect_back_or_default('/login')
-      flash[:notice] = I18n.t 'txt.activation_required', 
+      flash[:notice] = I18n.t 'txt.activation_required',
         :default => "Thanks for signing up! Please click the link in your email to activate your account"
     else
       render :action => 'new'
@@ -39,7 +39,7 @@ class UsersController < ApplicationController
     current_site
     render :action => "edit"
   end
-  
+
   def edit
     @user = find_user
   end
@@ -69,13 +69,13 @@ class UsersController < ApplicationController
   end
 
   def suspend
-    @user.suspend! 
+    @user.suspend!
     flash[:notice] = "User was suspended."
     redirect_to users_path
   end
 
   def unsuspend
-    @user.unsuspend! 
+    @user.unsuspend!
     flash[:notice] = "User was unsuspended."
     redirect_to users_path
   end
@@ -89,7 +89,7 @@ class UsersController < ApplicationController
     @user.destroy
     redirect_to users_path
   end
-  
+
   def make_admin
     redirect_back_or_default('/') and return unless admin?
     @user = find_user

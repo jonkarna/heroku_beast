@@ -38,7 +38,7 @@ Story: Creating an account
   # Account Creation Failure: Account exists
   #
 
-     
+
   Scenario: Anonymous user can not create an account replacing an activated account
     Given an anonymous user
      And  an activated user named 'Reggie'
@@ -64,7 +64,7 @@ Story: Creating an account
     Then  she should be at the 'users/new' page
      And  she should     see an errorExplanation message 'Login can't be blank'
      And  no user with login: 'oona' should exist
-     
+
   Scenario: Anonymous user can not create an account with no password
     Given an anonymous user
      And  no user with login: 'Oona' exists
@@ -72,7 +72,7 @@ Story: Creating an account
     Then  she should be at the 'users/new' page
      And  she should     see an errorExplanation message 'Password can't be blank'
      And  no user with login: 'oona' should exist
-     
+
   Scenario: Anonymous user can not create an account with no password_confirmation
     Given an anonymous user
      And  no user with login: 'Oona' exists
@@ -80,7 +80,7 @@ Story: Creating an account
     Then  she should be at the 'users/new' page
      And  she should     see an errorExplanation message 'Password confirmation can't be blank'
      And  no user with login: 'oona' should exist
-     
+
   Scenario: Anonymous user can not create an account with mismatched password & password_confirmation
     Given an anonymous user
      And  no user with login: 'Oona' exists
@@ -88,7 +88,7 @@ Story: Creating an account
     Then  she should be at the 'users/new' page
      And  she should     see an errorExplanation message 'Password doesn't match confirmation'
      And  no user with login: 'oona' should exist
-     
+
   Scenario: Anonymous user can not create an account with bad email
     Given an anonymous user
      And  no user with login: 'Oona' exists
@@ -105,5 +105,5 @@ Story: Creating an account
 
      And  oona should be logged in
 
-     
+
 

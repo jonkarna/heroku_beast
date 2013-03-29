@@ -11,7 +11,7 @@ module RspecOnRailsOnCrack
       @blocks  = []
       @filters = []
     end
-    
+
     def as(*users, &block)
       blocks, filters = @blocks, @filters
       users.each do |user|
@@ -24,11 +24,11 @@ module RspecOnRailsOnCrack
         end
       end
     end
-    
+
     def skip_filters(*filters)
       @filters.push *filters
     end
-    
+
     def all(&block)
       @blocks << block
     end
@@ -40,7 +40,7 @@ module RspecOnRailsOnCrack
       @methods << args
     end
   end
-  
+
   class ControllerAccessGroup
     def initialize(example_group, blocks = [], filters = [])
       @example_group = example_group
@@ -51,7 +51,7 @@ module RspecOnRailsOnCrack
         filters.each { |f| controller.stub!(f) }
       end
     end
-    
+
     def it_performs(description, method, actions, params = {}, &block)
       Array(actions).each do |action|
         param_desc = (params.respond_to?(:call) && params.respond_to?(:to_ruby)) ?
@@ -63,7 +63,7 @@ module RspecOnRailsOnCrack
         end
       end
     end
-    
+
     def it_allows(method, actions, params = {}, &block_params)
       it_performs :allows, method, actions, block_params || params do
         response.should be_success
@@ -81,36 +81,36 @@ module RspecOnRailsOnCrack
       @example_group.send(m, *args, &block)
     end
   end
-  
+
   module ControllerExampleGroupMethods
     @@variable_types = {:headers => :to_s, :flash => nil, :session => nil}
 
     def self.extended(base)
       base.send :include, InstanceMethods
     end
-    
+
     module InstanceMethods
       def acting(&block)
         act!
         block.call(response) if block
         response
       end
-      
+
       def act!
         instance_eval &self.class.acting_block
       end
-      
+
       def do_stubbed_action(method, action, params = {})
         controller.stub!(action)
         send method, action, params
       end
-      
+
     protected
       def asserts_content_type(type = :html)
         mime = Mime::Type.lookup_by_extension((type || :html).to_s)
         violated "Renders with Content-Type of #{response.content_type}, not #{mime}" unless response.content_type == mime
       end
-      
+
       def asserts_status(status)
         case status
         when String, Fixnum
@@ -137,7 +137,7 @@ module RspecOnRailsOnCrack
     # Checks that the action redirected:
     #
     #   it_redirects_to { foo_path(@foo) }
-    # 
+    #
     # Provide a better hint than Proc#inspect
     #
     #   it_redirects_to("foo_path(@foo)") { foo_path(@foo) }
@@ -151,7 +151,7 @@ module RspecOnRailsOnCrack
       end
     end
 
-    # Check that an instance variable was set to the instance variable of the same name 
+    # Check that an instance variable was set to the instance variable of the same name
     # in the Spec Example:
     #
     #   it_assigns :foo # => assigns[:foo].should == @foo
@@ -161,7 +161,7 @@ module RspecOnRailsOnCrack
     #   it_assigns :foo # => assigns[:foo].should_not be_nil (if @foo is not defined in spec)
     #
     # Check multiple instance variables
-    # 
+    #
     #   it_assigns :foo, :bar
     #
     # Check the instance variable was set to something more specific
@@ -186,7 +186,7 @@ module RspecOnRailsOnCrack
     #
     # Instance variables for :headers/:flash/:session are special and use the assigns_* methods.
     #
-    #   it_assigns :foo => 'bar', 
+    #   it_assigns :foo => 'bar',
     #     :headers => { :Location => '...'    }, # it.assigns_headers :Location => ...
     #     :flash   => { :notice   => :not_nil }, # it.assigns_flash :notice => ...
     #     :session => { :user     => 1        }, # it.assigns_session :user => ...
@@ -203,7 +203,7 @@ module RspecOnRailsOnCrack
         end
       end
     end
-  
+
     # See protected #render_blank, #render_template, and #render_xml for details.
     #
     #   it_renders :blank
@@ -213,7 +213,7 @@ module RspecOnRailsOnCrack
     def it_renders(render_method, *args, &block)
       send("it_renders_#{render_method}", *args, &block)
     end
-  
+
     # Check that the flash variable(s) were assigned
     #
     #   it_assigns_flash :notice => 'foo',
@@ -224,7 +224,7 @@ module RspecOnRailsOnCrack
     def it_assigns_flash(flash)
       raise NotImplementedError
     end
-    
+
     # Check that the session variable(s) were assigned
     #
     #   it_assigns_session :notice => 'foo',
@@ -235,7 +235,7 @@ module RspecOnRailsOnCrack
     def it_assigns_session(session)
       raise NotImplementedError
     end
-    
+
     # Check that the HTTP header(s) were assigned
     #
     #   it.assigns_headers :Location => 'foo',
@@ -246,7 +246,7 @@ module RspecOnRailsOnCrack
     def it_assigns_headers(headers)
       raise NotImplementedError
     end
-    
+
     @@variable_types.each do |collection_type, collection_op|
       public
       define_method "it_assigns_#{collection_type}" do |values|
@@ -254,7 +254,7 @@ module RspecOnRailsOnCrack
           send("it_assigns_#{collection_type}_values", key, value)
         end
       end
-      
+
       protected
       define_method "it_assigns_#{collection_type}_values" do |key, value|
         key = key.send(collection_op) if collection_op
@@ -277,13 +277,13 @@ module RspecOnRailsOnCrack
         end
       end
     end
-    
+
     public
 
     def it_assigns_example_values(name, value)
       it "assigns @#{name}" do
         act!
-        value = 
+        value =
           case value
           when :not_nil
             assigns[name].should_not be_nil
@@ -315,7 +315,7 @@ module RspecOnRailsOnCrack
         end
       end
     end
-    
+
     # Creates 3 examples: One to check that the given template was rendered.
     # It looks for two options: :status and :format.
     #
@@ -335,7 +335,7 @@ module RspecOnRailsOnCrack
         unless options[:pending]
           @controller.integrate_views!
         end
-        
+
         acting do |response|
           asserts_status options[:status]
           asserts_content_type options[:format]
@@ -347,7 +347,7 @@ module RspecOnRailsOnCrack
         end
       end
     end
-    
+
     # Creates 3 examples: One to check that the given XML was returned.
     # It looks for two options: :status and :format.
     #
@@ -375,7 +375,7 @@ module RspecOnRailsOnCrack
     def it_renders_xml(record = nil, options = {}, &block)
       it_renders_xml_or_json :xml, record, options, &block
     end
-    
+
     # Creates 3 examples: One to check that the given JSON was returned.
     # It looks for two options: :status and :format.
     #
@@ -403,7 +403,7 @@ module RspecOnRailsOnCrack
     def it_renders_json(record = nil, options = {}, &block)
       it_renders_xml_or_json :json, record, options, &block
     end
-    
+
     def it_renders_xml_or_json(format, record = nil, options = {}, &block)
       if record.is_a?(Hash)
         options = record

@@ -5,13 +5,13 @@
       short: "%e. %b"
       long: "%e. %B %Y"
       only_day: "%e"
- 
+
     day_names: [Sonntag, Montag, Dienstag, Mittwoch, Donnerstag, Freitag, Samstag]
     abbr_day_names: [So, Mo, Di, Mi, Do, Fr, Sa]
     month_names: [~, Januar, Februar, März, April, Mai, Juni, Juli, August, September, Oktober, November, Dezember]
     abbr_month_names: [~, Jan, Feb, Mär, Apr, Mai, Jun, Jul, Aug, Sep, Okt, Nov, Dez]
     order: [ :day, :month, :year ]
-  
+
   time:
     formats:
       default: "%A, %e. %B %Y, %H:%M Uhr"
@@ -19,10 +19,10 @@
       short: "%e. %B, %H:%M Uhr"
       long: "%A, %e. %B %Y, %H:%M Uhr"
       only_second: "%S"
- 
+
     am: ""
     pm: ""
-      
+
   datetime:
     distance_in_words:
       half_a_minute: 'eine halbe Minute'
@@ -58,7 +58,7 @@
       over_x_years:
         one: 'mehr als 1 Jahr'
         other: '{{count}} Jahre'
-      
+
   number:
     format:
       precision: 2
@@ -68,7 +68,7 @@
       format:
         unit: '€'
         format: '%n%u'
-        
+
   active_record:
     error:
       header_message: ["Konnte das {{object_name}} Objekt nicht speichern: 1 Fehler.", "Konnte das {{object_name}} Objekt nicht speichern: {{count}} Fehler."]
@@ -160,14 +160,14 @@
     invalid_login: Ungültiger Login
     successful_login: Login erfolgreich
     logged_out: Sie sind ausgeloggt
-    
+
     forum_created: Das Forum wurde erfolgreich angelegt.
     forum_created: Das Forum wurde erfolgreich aktualisiert.
-    
+
     suspended_user_post: Dieser Beitrag wurde entfernt
 
     searching_for: Suche nach
-    
+
     footer_message: Two's company. Three's a forum. More's a Beast.
 
     sidebar:

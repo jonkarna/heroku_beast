@@ -10,17 +10,17 @@ module ModelStubbing
     def time(*args)
       @current_time = Time.utc(*args)
     end
-    
+
     def current_time
       @current_time ||= Time.now.utc
     end
-    
+
     # Creates a new ModelStubbing::Model to hold one or more stubs.  Multiple calls will append
     # any added stubs to the same model instance.
     #
     # Options:
     # * :name      - The name used of the model.  Defaults to the "Foo".underscore.pluralize
-    # * :plural    - The name of the method used to access the stubs in your test.  
+    # * :plural    - The name of the method used to access the stubs in your test.
     #                Defaults to #name.
     # * :singular  - The name of the method for the new_* stub accessors.
     # * :validate  - set to false if you don't want to validate model data, or run callbacks
@@ -32,7 +32,7 @@ module ModelStubbing
       @models[m.name].instance_eval(&block) if block
       @models[m.name]
     end
-    
+
     def initialize(&block)
       @ordered_models = []
       @models         = {}
@@ -40,7 +40,7 @@ module ModelStubbing
       @options        = {}
       instance_eval &block if block
     end
-    
+
     def dup
       copy = self.class.new
       copy.current_time = @current_time
@@ -56,12 +56,12 @@ module ModelStubbing
       end
       copy
     end
-    
+
     def ==(defn)
       (defn.object_id == object_id) ||
         (defn.is_a?(Definition) && defn.models == @models && defn.stubs == @stubs)
     end
-    
+
     # Sets up the given class for this definition.  Adds a few helper methods:
     #
     # * #stubs: Lets you access all stubs with a global key, which combines the model
@@ -84,7 +84,7 @@ module ModelStubbing
         base.create_model_methods_for models.values
       end
     end
-    
+
     # Retrieves a record for a given stub.  The optional attributes hash let's you specify
     # custom attributes.  If no custom attributes are passed, then each call to the same
     # stub will return the same object.  Custom attributes result in a new instantiated object
@@ -92,25 +92,25 @@ module ModelStubbing
     def retrieve_record(key, attributes = {})
       @stubs[key].record(attributes)
     end
-    
+
     def insert?
       @insert != false && database?
     end
-    
+
     def insert!
       return unless database? && insert?
       ActiveRecord::Base.transaction do
         ordered_models.each(&:insert)
       end
     end
-    
+
     def teardown!
       return unless database? && insert?
       ActiveRecord::Base.transaction do
         ordered_models.each(&:purge)
       end
     end
-    
+
     def setup_test_run
       ModelStubbing.records.clear
       ModelStubbing.stub_current_time_with(current_time) if current_time
@@ -118,7 +118,7 @@ module ModelStubbing
       ActiveRecord::Base.connection.increment_open_transactions
       ActiveRecord::Base.connection.begin_db_transaction
     end
-    
+
     def teardown_test_run
       ModelStubbing.records.clear
       # TODO: teardown Time.stubs(:now)
@@ -126,11 +126,11 @@ module ModelStubbing
       ActiveRecord::Base.connection.rollback_db_transaction
       ActiveRecord::Base.verify_active_connections!
     end
-    
+
     def database?
       defined?(ActiveRecord)
     end
-    
+
     def inspect
       "(ModelStubbing::Definition(:models => [#{@models.keys.collect { |k| k.to_s }.sort.join(", ")}]))"
     end

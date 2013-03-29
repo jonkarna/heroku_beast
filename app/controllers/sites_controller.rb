@@ -74,7 +74,7 @@ class SitesController < ApplicationController
       format.xml  { head :ok }
     end
   end
-  
+
   def authorized?
     @site.nil? or @site.new_record? #or current_site == Site.find(:first)
   end

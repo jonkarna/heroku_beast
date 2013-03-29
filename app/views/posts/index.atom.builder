@@ -6,12 +6,12 @@ xml.feed(:xmlns => "http://www.w3.org/2005/Atom") do |feed|
   feed.id  request.url
   for post in @posts do
     feed.entry do |entry|
-      entry.id forum_topic_url(post.topic.forum, post.topic, 
+      entry.id forum_topic_url(post.topic.forum, post.topic,
                                :anchor => dom_id(post))
       entry.title post.topic
       entry.content post.body
       entry.updated post.updated_at.to_s(:rfc3339)
-      entry.link :href => forum_topic_url(post.topic.forum, post.topic, 
+      entry.link :href => forum_topic_url(post.topic.forum, post.topic,
                                           :anchor => dom_id(post))
 
       entry.author do |author|

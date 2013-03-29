@@ -17,7 +17,7 @@ module ModelStubbing
   # Creates or updates a definition going by the given name as a key.  If
   # no name is given, it defaults to the current class or :default.  Multiple
   # #define_models calls with the same name will modify the definition.
-  # 
+  #
   # By default, only validations are run before inserting records.  You can
   # configure this with the :validate or :callbacks options.
   #
@@ -72,10 +72,10 @@ protected
       when :mocha then Time.stubs(:now).returns(time)
     end
   end
-  
+
   def self.guess_mock_framework!
     if @@mock_framework.nil?
-      @@mock_framework = 
+      @@mock_framework =
         if Time.respond_to?(:stub!)
           :rspec
         elsif Time.respond_to?(:stubs)

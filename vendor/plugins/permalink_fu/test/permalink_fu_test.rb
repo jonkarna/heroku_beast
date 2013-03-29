@@ -25,7 +25,7 @@ class BaseModel
     send self.class.validation
     permalink
   end
-  
+
   def new_record?
     @id.nil?
   end
@@ -33,7 +33,7 @@ end
 
 class MockModel < BaseModel
   def self.count(whatever, options = {})
-    if options[:conditions][1] == 'foo' || options[:conditions][1] == 'bar' || 
+    if options[:conditions][1] == 'foo' || options[:conditions][1] == 'bar' ||
       (options[:conditions][1] == 'bar-2' && options[:conditions][2] != 2)
       1
     else
@@ -74,7 +74,7 @@ class PermalinkFuTest < Test::Unit::TestCase
       assert_equal to, PermalinkFu.escape(from)
     end
   end
-  
+
   def test_should_escape_activerecord_model
     @m = MockModel.new
     @@samples.each do |from, to|
@@ -92,18 +92,18 @@ class PermalinkFuTest < Test::Unit::TestCase
       end
     end
   end
-  
+
   def test_should_create_unique_permalink
     @m = MockModel.new
     @m.permalink = 'foo'
     @m.validate
     assert_equal 'foo-2', @m.permalink
-    
+
     @m.permalink = 'bar'
     @m.validate
     assert_equal 'bar-3', @m.permalink
   end
-  
+
   def test_should_not_check_itself_for_unique_permalink
     @m = MockModel.new
     @m.id = 2
@@ -111,7 +111,7 @@ class PermalinkFuTest < Test::Unit::TestCase
     @m.validate
     assert_equal 'bar-2', @m.permalink
   end
-  
+
   def test_should_create_unique_scoped_permalink
     @m = ScopedModel.new
     @m.permalink = 'foo'

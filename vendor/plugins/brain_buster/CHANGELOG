@@ -38,7 +38,7 @@ HEAD (working towards 0.9)
 * major functionality overhaul, using fine grained filters (in BrainBustersSystem) instead of a method you need to call from w/i your controller
 * add a new salting of the cookie values, set via @controller.brain_buster_salt= or ApplicationController.brain_buster_salt=.
 * moved config options to be class level methods (using class variables) in ActionController
-* add a big warning that the next release will remove the "BrainBustersMixin" and "BrainBustersFilter" 
+* add a big warning that the next release will remove the "BrainBustersMixin" and "BrainBustersFilter"
     - you should convert to using the fine grained filters if you want keep up with the latest version
     - see the readme for more details
 

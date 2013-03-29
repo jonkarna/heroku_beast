@@ -35,7 +35,7 @@
         :over_x_years        => {:one => 'over 1 year', :other => '{{count}} years'}
       }
     },
- 
+
     # numbers
     :number => {
       :format => {
@@ -51,7 +51,7 @@
         }
       }
     },
- 
+
     # Active Record
     :active_record => {
       :error => {
@@ -130,7 +130,7 @@
         :defaults => "You also need to set up the default locale and/or locale in your <code>environment.rb</code> or an initializer.",
         :locale_structure_title => "A word on the structure of locales",
         :locale_structure_number => "You may have noticed that inside the <code>:number</code> part of the locale, we defined <code>:format</code> and <code>:currency</code>. In general, locales are structured hierarchically - i.e. a currencies are numbers, percentages are numbers, etc. <code>:currency</code> can either override the basic <code>:format</code> settings (in our case, we set <code>:precision</code> to 2 instead of 3) or extend them (we add two new options, <code>:unit</code> and <code>:format</code>).",
-        :locale_structure_date_time => "The same holds true for dates and times: If needed, <code>:datetime</code> and <code>:time_with_zone</code> can be used to specifically address formatting of their respective types instead of just relying on the settings for <code>:time</code>. Note, however, that usually you want to use the same formats as <code>:time</code>."   
+        :locale_structure_date_time => "The same holds true for dates and times: If needed, <code>:datetime</code> and <code>:time_with_zone</code> can be used to specifically address formatting of their respective types instead of just relying on the settings for <code>:time</code>. Note, however, that usually you want to use the same formats as <code>:time</code>."
       },
       :time_formats => {
         :rails_standards_work => "Rails standard formats (Time::DATE_FORMATS) still work:"

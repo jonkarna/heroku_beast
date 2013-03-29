@@ -13,7 +13,7 @@ namespace :stubs do
     require 'model_stubbing'
 
     require root + (ENV['STUBS'] || 'spec/stubs')
-    
+
     defn = (ENV['DEF'] || 'default').intern
     ModelStubbing.definitions[defn].insert!
   end

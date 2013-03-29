@@ -6,7 +6,7 @@ module ModelStubbing
         attr_accessor :definition, :definition_inserted
       end
       base.extend ClassMethods
-      
+
       if base.respond_to?(:prepend_after)
         base.prepend_after(:all) do
           if self.class.definition_inserted

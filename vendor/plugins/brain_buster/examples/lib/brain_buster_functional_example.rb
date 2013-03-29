@@ -8,31 +8,31 @@ class PagesController < ActionController::Base
   self.append_view_path File.expand_path(File.join(File.dirname(__FILE__), "views"))
   # hack the plugin view path onto the controller
   self.append_view_path File.expand_path(File.join(File.dirname(__FILE__), "..", "views", "brain_busters"))
-  
+
   before_filter :create_brain_buster, :only => [:new]
   before_filter :validate_brain_buster, :only => [:create]
 
   def new
-    render :template => "/new" 
+    render :template => "/new"
   end
-  
+
   def create
     render :text => "Success!"
   end
-  
-  def rescue_action(e) 
-    raise e 
+
+  def rescue_action(e)
+    raise e
   end
-  
+
 end
 
 describe PagesController do
 
   before(:all) { setup_database }
   after(:all) { teardown_database }
-  
+
   before(:each) { controller.brain_buster_salt = [Array.new(32){rand(256).chr}.join].pack("m").chomp }
-  
+
   describe "configuration" do
 
     it "should add the plugin view path to the view path" do
@@ -55,12 +55,12 @@ describe PagesController do
       controller.should respond_to(:captcha_previously_passed?)
       controller.captcha_passed?.should == controller.captcha_previously_passed?
     end
-    
+
   end
 
   describe "retrieving brain buster (via new)" do
 
-  
+
     it "should create captcha for first request" do
       brain_buster = stub("brain_buster")
       BrainBuster.expects(:find).returns(brain_buster)
@@ -74,13 +74,13 @@ describe PagesController do
       get :new, :captcha_id => '1'
       assigns(:captcha).should == brain_buster
     end
-    
+
   end
-  
+
   describe "validate filter" do
 
     it "should ignore filters if brain buster is not enabled" do
-      begin 
+      begin
         controller.brain_buster_enabled = false
         BrainBuster.expects(:find_random_or_previous).never
         post :create
@@ -96,7 +96,7 @@ describe PagesController do
       response.body.should == controller.brain_buster_failure_message
     end
 
-    it "should indicate previous captcha attempt failed" do 
+    it "should indicate previous captcha attempt failed" do
       stub_default_brain_buster
 
       post :create, :captcha_id => '1', :captcha_answer => "5"
@@ -104,7 +104,7 @@ describe PagesController do
       cookies['captcha_status'].should == BrainBusterSystem.encrypt("failed", controller.brain_buster_salt)
     end
 
-    it "should fail validation and render failure message text if captcha answer is wrong" do 
+    it "should fail validation and render failure message text if captcha answer is wrong" do
       stub_default_brain_buster
       post :create, :captcha_id => '1', :captcha_answer => "5"
       flash[:error].should == controller.brain_buster_failure_message
@@ -127,22 +127,22 @@ describe PagesController do
       post :create
       response.body.should == "Success!"
     end
-    
-    
+
+
   end
 end
 
 describe "Validate filter", ActionController::TestCase do
-  
+
   describe "User manually deletes a record from the db", ActionController::TestCase do
-    
+
     pending "successfully returns a record when the requested id does not exist in the db" do
       # BrainBuster.expects(:smart_find).with('123789')
-      
+
       get :new, :captcha_id => '123789'
       assigns(:captcha).should.not.be nil
     end
-    
+
   end
-  
+
 end

@@ -25,10 +25,10 @@
     <th class="la" width="70%" colspan="3"><%= I18n.t 'txt.forum', :default => 'Forum' %></th>
     <th class="la" width="30%" colspan="1"><%= I18n.t 'txt.latest_post', :default => 'Last Post' %></th>
   </tr>
-<% for forum in @forums do %>  
+<% for forum in @forums do %>
   <tr class="forum" id="forum_<%= forum.id %>_row">
     <td class="vat c1">
-    
+
       <% if recent_forum_activity(forum) %>
       <%= image_tag "clearbits/comment.gif", :class => "icon green", :title => I18n.t('txt.recent_activity', :default => 'Recent activity') %>
       <% else %>

@@ -26,20 +26,20 @@ class BrainBuster < ActiveRecord::Base
   end
 
   private
-  
+
   def self.find_random
-    find(:first, :order => random_function) 
+    find(:first, :order => random_function)
   end
-  
+
   def self.find_specific_or_fallback(id)
     find(id)
   rescue ActiveRecord::RecordNotFound
     find_random
   end
-  
+
   def answer_is_integer?
     int_answer = answer.to_i
     (int_answer != 0) || (int_answer == 0 && answer == "0")
   end
-  
+
 end

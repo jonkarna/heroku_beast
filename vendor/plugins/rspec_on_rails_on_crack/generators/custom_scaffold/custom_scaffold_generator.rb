@@ -17,7 +17,7 @@ class CustomScaffoldGenerator < Rails::Generator::NamedBase
 
     base_name, @controller_class_path, @controller_file_path, @controller_class_nesting, @controller_class_nesting_depth = extract_modules(@controller_name)
     @controller_class_name_without_nesting, @controller_singular_name, @controller_plural_name = inflect_names(base_name)
-    
+
     if @controller_class_nesting.empty?
       @controller_class_name = @controller_class_name_without_nesting
     else
@@ -74,7 +74,7 @@ class CustomScaffoldGenerator < Rails::Generator::NamedBase
 
     recorded_session
   end
-  
+
   protected
     # Override with your own usage banner.
     def banner
@@ -86,7 +86,7 @@ class CustomScaffoldGenerator < Rails::Generator::NamedBase
       opt.separator 'Options:'
       opt.on("--skip-timestamps",
              "Don't add timestamps to the migration file for this model") { |v| options[:skip_timestamps] = v }
-      opt.on("--skip-migration", 
+      opt.on("--skip-migration",
              "Don't generate a migration file for this model") { |v| options[:skip_migration] = v }
     end
 end

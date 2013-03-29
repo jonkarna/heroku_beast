@@ -7,12 +7,12 @@ module ApplicationHelper
 
   def pagination(collection)
     if collection.total_entries > 1
-      "<p class='pages'>" + I18n.t('txt.pages', :default => 'Pages') + ": <strong>" + 
+      "<p class='pages'>" + I18n.t('txt.pages', :default => 'Pages') + ": <strong>" +
       will_paginate(collection, :inner_window => 10, :next_label => I18n.t('txt.page_next', :default => 'next'), :prev_label => I18n.t('txt.page_prev', :default => 'previous')) +
       "</strong></p>"
     end
   end
-  
+
   def next_page(collection)
     unless collection.current_page == collection.total_entries or collection.total_entries == 0
       "<p style='float:right;'>" + link_to(I18n.t('txt.next_page', :default => 'next page'), { :page => collection.current_page.next }.merge(params.reject{|k,v| k=="page"})) + "</p>"
@@ -28,7 +28,7 @@ module ApplicationHelper
 
   def topic_title_link(topic, options)
     if topic.title =~ /^\[([^\]]{1,15})\]((\s+)\w+.*)/
-      "<span class='flag'>#{$1}</span>" + 
+      "<span class='flag'>#{$1}</span>" +
       link_to(h($2.strip), forum_topic_path(@forum, topic), options)
     else
       link_to(h(topic.title), forum_topic_path(@forum, topic), options)
@@ -45,7 +45,7 @@ module ApplicationHelper
 
   def search_path(atom = false)
     options = params[:q].blank? ? {} : {:q => params[:q]}
-    prefix = 
+    prefix =
       if @topic
         options.update :topic_id => @topic, :forum_id => @forum
         :forum_topic

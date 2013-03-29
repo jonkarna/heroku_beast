@@ -59,7 +59,7 @@ a { color: #24b; }
 	font-family:'Lucida Grande', Tahoma, Arial, Helvetica, sans-serif;
 	font-size:0.75em;
 	color:#333;
-	
+
 	margin-left:3%;
 	width:67%;
 	min-width:545px;
@@ -70,8 +70,8 @@ a { color: #24b; }
 
 #content form {margin-bottom:0;}
 
-#content p.subtle { 
-	margin:0 0 0.5em; 
+#content p.subtle {
+	margin:0 0 0.5em;
 	float:right;
 	}
 #content .subtle a
@@ -148,11 +148,11 @@ p.sections a.action { color:#c00; }
 
 h1,h2,h3,h4,h5,h6
 {
-font-family:'Lucida Grande', 'Trebuchet MS', Arial, Helvetica, sans-serif;	
+font-family:'Lucida Grande', 'Trebuchet MS', Arial, Helvetica, sans-serif;
 }
 
-h1 {	
-	font-size:1.3em; 
+h1 {
+	font-size:1.3em;
 }
 
 h1 img { vertical-align:middle; }
@@ -179,7 +179,7 @@ h2 span
 	margin-left:1em;
 }
 
-h3 
+h3
 {
   padding:2px 10px 3px;
   background:#333;
@@ -209,11 +209,11 @@ hr
 
 #right hr { border-color:#bbb; }
 
-#monitor_topic { 
-  font-size: 12px; 
+#monitor_topic {
+  font-size: 12px;
 }
-#monitor_topic .icon { 
-  background-image:none; 
+#monitor_topic .icon {
+  background-image:none;
 }
 
 /* footer */
@@ -358,9 +358,9 @@ p.private
   color:#c00;
   font-weight:bold;
 }
-p.psmall { 
-  font-size:0.7em; 
-  font-weight:normal; 
+p.psmall {
+  font-size:0.7em;
+  font-weight:normal;
 }
 
 div.upload
@@ -585,11 +585,11 @@ table.topics
  { font-size:0.8em; }
 table.forums tr th { font-size:0.8em; }
 table.forums tr td .title {
-	font-size:1.4em; 
+	font-size:1.4em;
 	}
 
 table.forums tr td .desc {
-margin:0.5em 0;	
+margin:0.5em 0;
 }
 table.forums tr td
 {
@@ -736,7 +736,7 @@ table.posts tr.spacer td
 }
 
 .post .author img {
-	float:left; 
+	float:left;
 	margin-right:0.5em;
 	}
 .post .author
@@ -817,7 +817,7 @@ table.posts tr.spacer td
 
 .posts .post .body blockquote p
 {
-	margin:0.5em 0;	
+	margin:0.5em 0;
 }
 
 .post .body p.topic
@@ -833,10 +833,10 @@ table.posts tr.spacer td
 /*
 table.posts .editing td {
 }
-table.posts .editing td.author { 
-  background:#030; 
+table.posts .editing td.author {
+  background:#030;
   }
-  
+
 table.posts .editing td.author * { color:#ccc; }
 table.posts .editing td.body { }
 */
@@ -934,7 +934,7 @@ div.editbox ul.help { margin:0; }
 
 div.editbox ul.help {
   list-style-type:none; }
-  
+
 #monitor_topic a
 {
   color: #666;
